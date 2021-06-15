@@ -9,11 +9,13 @@ _handle_local(){
 		{ setsid -f sxiv -t -a "$1"/* >/dev/null 2>&1 ; }
 		
 	elif [ -f "$1" ]; then
-		{ setsid -f sxiv -a "$1" >/dev/null 2>&1 ; }
+		{ setsid -f sxiv -a "$@" >/dev/null 2>&1 ; }
 	fi
 }
 
-if [ $# = "1" ]; then
+if [ $# = "0" ]; then 
+	echo "usage: viewnsxiv files/directorie/url..."
+else
 	case "$@" in
 		http://*|https://*) 
 			_handle_url "$@"
