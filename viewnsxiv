@@ -1,0 +1,25 @@
+#!/bin/sh
+
+_handle_url(){
+	curl -sL "$1" > "/tmp/$(echo "$@" | sed "s/.*\///;s/%20/ /g")" && sxiv -a "/tmp/$(echo "$@" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1
+}
+
+_handle_local(){
+	if [ -d "$1" ] ; then
+		{ setsid -f sxiv -t -a "$1"/* >/dev/null 2>&1 ; }
+		
+	elif [ -f "$1" ]; then
+		{ setsid -f sxiv -a "$1" >/dev/null 2>&1 ; }
+	fi
+}
+
+if [ $# = "1" ]; then
+	case "$@" in
+		http://*|https://*) 
+			_handle_url "$@"
+			;;
+		*)
+			_handle_local "$@"
+			;;
+	esac
+fi
