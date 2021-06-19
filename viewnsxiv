@@ -14,7 +14,7 @@ _handle_local(){
 }
 
 if [ $# = "0" ]; then 
-	echo "usage: viewnsxiv files/directorie/url..."
+	echo "usage: viewnsxiv files/directories/url..."
 else
 	case "$@" in
 		http://*|https://*) 
